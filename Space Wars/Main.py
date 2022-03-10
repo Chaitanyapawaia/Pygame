@@ -11,6 +11,9 @@ screenheight = 750
 screen = pygame.display.set_mode([screenwidth, screenheight])
 pygame.display.set_caption("Space Wars")
 
+icon = pygame.image.load(os.path.join(r"C:\Users\Chaitanya\Documents\Python Scripts\Pygame\Space Wars\Assets\Images","icon.png"))
+pygame.display.set_icon(icon)
+
 
 #load Images
 #enemy ship
@@ -19,11 +22,6 @@ enemy_2 = pygame.image.load(os.path.join(r"C:\Users\Chaitanya\Documents\Python S
 enemy_3 = pygame.image.load(os.path.join(r"C:\Users\Chaitanya\Documents\Python Scripts\Pygame\Space Wars\Assets\Images","enemy_3.png"))
 enemy_4 = pygame.image.load(os.path.join(r"C:\Users\Chaitanya\Documents\Python Scripts\Pygame\Space Wars\Assets\Images","enemy_4.png"))
 enemy_5 = pygame.image.load(os.path.join(r"C:\Users\Chaitanya\Documents\Python Scripts\Pygame\Space Wars\Assets\Images","enemy_5.png"))
-
-#bullet
-enemy_bullet = pygame.image.load(os.path.join(r"C:\Users\Chaitanya\Documents\Python Scripts\Pygame\Space Wars\Assets\Images","enemy_bullet.png"))
-power_bullet = pygame.image.load(os.path.join(r"C:\Users\Chaitanya\Documents\Python Scripts\Pygame\Space Wars\Assets\Images","power_bullet.png"))
-bullet = pygame.image.load(os.path.join(r"C:\Users\Chaitanya\Documents\Python Scripts\Pygame\Space Wars\Assets\Images","bullet.png"))
 
 #enemy lasers
 laser_1 = pygame.image.load(os.path.join(r"C:\Users\Chaitanya\Documents\Python Scripts\Pygame\Space Wars\Assets\Images","laser_1.png"))
@@ -61,7 +59,6 @@ class Ship:
         return self.ship_img.get_width()
 
     def get_height(self):
-        print(self.ship_img.get_height())
         return self.ship_img.get_height()
 
 
@@ -107,7 +104,7 @@ def main():
 
     player_vel = 5
 
-    player = Player(300, 500)
+    player = Player(screenwidth/2 - player_ship.get_width()/2, 500)
 
     clock = pygame.time.Clock()
 
