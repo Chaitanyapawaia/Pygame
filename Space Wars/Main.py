@@ -3,6 +3,9 @@ import os
 import time
 import pygame
 
+#score
+score = 0
+
 pygame.font.init()
 
 screenwidth = 1500
@@ -121,7 +124,6 @@ class Player(Ship):
         self.max_health = health
 
     def move_lasers(self, vel, objs):
-        #global score , score
         self.cooldown()
         for laser in self.lasers:
             laser.move(vel)
@@ -131,8 +133,8 @@ class Player(Ship):
                 for obj in objs:
                     if laser.collision(obj):
                         objs.remove(obj)
-                        #global score
-                        #score += 1
+                        global score
+                        score += 1
                         if laser in self.lasers:
                             self.lasers.remove(laser)
 
@@ -177,10 +179,9 @@ def collide(obj1, obj2):
 def main():
     run = True
     FPS = 60
-    score = 0
     lives = 6
     main_font = pygame.font.SysFont("comicsans", 50)
-    lost_font = pygame.font.SysFont("comicsans", 70)
+    #lost_font = pygame.font.SysFont("comicsans", 70)
     enemies = []
     wave_length = 5
     enemy_vel = 2
