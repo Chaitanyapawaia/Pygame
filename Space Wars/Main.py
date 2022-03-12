@@ -40,8 +40,8 @@ player_ship = pygame.image.load(os.path.join(r"C:\Users\Chaitanya\Documents\Pyth
 game_bg = pygame.transform.scale(pygame.image.load(os.path.join(r"C:\Users\Chaitanya\Documents\Python Scripts\Pygame\Space Wars\Assets\Images","game_bg.png")), (screenwidth,screenheight))
 
 #miscellaneous
-game_over = pygame.image.load(os.path.join(r"C:\Users\Chaitanya\Documents\Python Scripts\Pygame\Space Wars\Assets\Images","game_over.png"))
-
+game_over = pygame.transform.scale(pygame.image.load(os.path.join(r"C:\Users\Chaitanya\Documents\Python Scripts\Pygame\Space Wars\Assets\Images","game_over.png")), (screenwidth,screenheight))
+main_pg = pygame.transform.scale(pygame.image.load(os.path.join(r"C:\Users\Chaitanya\Documents\Python Scripts\Pygame\Space Wars\Assets\Images","main_pg.png")), (screenwidth,screenheight))
 
 class Laser:
 
@@ -58,7 +58,7 @@ class Laser:
         self.y += vel
 
     def off_screen(self, screenheight):
-        return not(self.y , screenheight and self.y >= 0)
+        return not(self.y <= screenheight and self.y >= 0)
     
     def collision(self, obj):
         return collide(self, obj)
@@ -121,6 +121,7 @@ class Player(Ship):
         self.max_health = health
 
     def move_lasers(self, vel, objs):
+        #global score , score
         self.cooldown()
         for laser in self.lasers:
             laser.move(vel)
@@ -130,6 +131,8 @@ class Player(Ship):
                 for obj in objs:
                     if laser.collision(obj):
                         objs.remove(obj)
+                        #global score
+                        #score += 1
                         if laser in self.lasers:
                             self.lasers.remove(laser)
 
@@ -195,7 +198,7 @@ def main():
         screen.blit(game_bg, (0,0))
 
         #draw text
-        score_label = main_font.render(f"Score : {score}", 1, (0,255,0))
+        score_label = main_font.render(f"Score : {score}", 1, (255,255,255))
         lives_label = main_font.render(f"Lives : {lives}", 1, (255,255,255))
 
         screen.blit(score_label, (15, 10))
@@ -207,8 +210,9 @@ def main():
         player.draw(screen)
 
         if lost:
-            lost_label = lost_font.render("You Lost!!!!", 1, (255,255,255))
-            screen.blit(lost_label, (screenwidth/2 - lost_label.get_width()/2, screenheight/2))
+            screen.blit(game_over, (0,0))
+            #lost_label = lost_font.render("You Lost!!!!", 1, (255,255,255))
+            #screen.blit(lost_label, (screenwidth/2 - lost_label.get_width()/2, screenheight/2))
 
         pygame.display.update()
 
@@ -221,13 +225,12 @@ def main():
             lost_count += 1
 
         if lost:
-            if lost_count > FPS * 5 :
+            if lost_count > FPS * 2 :
                 run = False
             else:
                 continue
 
         if len(enemies) == 0:
-            score += 1
             wave_length += 5
             for i in range(wave_length):
                 enemy = Enemy(random.randrange(50, screenwidth-100), random.randrange(-1500, -100), random.choice(["enemy1", "enemy2", "enemy3", "enemy4", "enemy5" ]))
@@ -260,6 +263,7 @@ def main():
                 player.health -= 10
                 enemies.remove(enemy)
 
+
             elif enemy.y + enemy.get_height() > screenheight:
                 lives -= 1
                 enemies.remove(enemy)
@@ -271,7 +275,7 @@ def main_menu():
     title_font = pygame.font.SysFont("comicsans", 70)
     run = True
     while run:
-        screen.blit(game_bg, (0,0))
+        screen.blit(main_pg, (0,0))
         title_label = title_font.render("Press the mouse to begin...", 1, (255,255,255))
         screen.blit(title_label, (screenwidth/2 - title_label.get_width()/2, 350))
         pygame.display.update()
@@ -283,6 +287,3 @@ def main_menu():
     pygame.quit()
 
 main_menu()
-
-
-
