@@ -186,7 +186,8 @@ def main():
     wave_length = 5
     enemy_vel = 2
     laser_vel = 5
-    player_vel = 5
+    player_vel_x = 7
+    player_vel_y = 5
 
     player = Player(screenwidth/2 - player_ship.get_width()/2, 600)
 
@@ -242,14 +243,14 @@ def main():
                 run = False
 
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT] and player.x - player_vel > 0 : #left
-            player.x -= player_vel
-        if keys[pygame.K_RIGHT] and player.x + player_vel + player.get_width() < screenwidth: #right
-            player.x += player_vel
-        if keys[pygame.K_UP] and player.y - player_vel > 0 : #up
-            player.y -= player_vel
-        if keys[pygame.K_DOWN] and player.y + player_vel + player.get_height() + 20 < screenheight: #down
-            player.y += player_vel
+        if keys[pygame.K_LEFT] and player.x - player_vel_x > 0 : #left
+            player.x -= player_vel_x
+        if keys[pygame.K_RIGHT] and player.x + player_vel_x + player.get_width() < screenwidth: #right
+            player.x += player_vel_x
+        if keys[pygame.K_UP] and player.y - player_vel_y > 0 : #up
+            player.y -= player_vel_y
+        if keys[pygame.K_DOWN] and player.y + player_vel_y + player.get_height() + 20 < screenheight: #down
+            player.y += player_vel_y
         if keys[pygame.K_SPACE]:
             player.shoot()
 
